@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdtprojectproperties>
+  <section name="org.eclipse.cdt.internal.ui.wizards.settingswizards.IncludePaths">
+    <language id="org.eclipse.cdt.core.assembly" name="s,S"/>
+    <language id="org.eclipse.cdt.core.gcc" name="C Source File">
+      <includepath>Inc</includepath>
+    </language>
+    <language name="Object File"/>
+  </section>
+  <section name="org.eclipse.cdt.internal.ui.wizards.settingswizards.Macros">
+    <language id="org.eclipse.cdt.core.assembly" name="s,S"/>
+    <language id="org.eclipse.cdt.core.gcc" name="C Source File">
+      <macro>
+        <name>NUCLEO_L552ZE_Q</name>
+        <value/>
+      </macro>
+      <macro>
+        <name>STM32</name>
+        <value/>
+      </macro>
+      <macro>
+        <name>STM32L5</name>
+        <value/>
+      </macro>
+      <macro>
+        <name>STM32L552ZETxQ</name>
+        <value/>
+      </macro>
+    </language>
+    <language name="Object File"/>
+  </section>
+</cdtprojectproperties>

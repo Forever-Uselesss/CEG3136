@@ -48,14 +48,8 @@
 **/*.temp
 **/*~
 
-# IDE specific (but keep essential config files)
-!**/.vscode/settings.json
-!**/.vscode/launch.json
-!**/.vscode/tasks.json
-**/.clangd/
 
-# Keep these important files for building
-!**/.vscode/c_cpp_properties.json
+**/.clangd/
 
 # System files
 **/*.log
@@ -69,6 +63,8 @@ ehthumbs.db
 
 # VS Code workspace files (optional)
 *.code-workspace
+*.vscode
+.vscode/
 
 # STM32CubeMX backup files
 **/*.ioc.bak

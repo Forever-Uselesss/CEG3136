@@ -1,0 +1,91 @@
+
+##############################################################################################################
+
+test code
+
+#################################################################################################################
+
+#include "gpio.h"
+#include "systick.h"
+
+static const Pin_t BlueLED = {GPIOB, 7}; // Pin PB7 -> User LD2
+static const Pin_t Button = {GPIOC, 13}; // Pin PC13 -> User B1
+
+#define BLINK_PERIOD 1000 // 1 second
+
+static unsigned int loopCount = 0;
+
+int main(void)
+{
+    GPIO_Enable(BlueLED);
+    GPIO_Enable(Button);
+    GPIO_Output(BlueLED);
+    GPIO_Mode(Button, Input);
+
+    StartSysTick();
+
+    printf("Welcome to %c%c%c%d!\n", 67, 69, 71, 0xC40);
+
+    while (1)
+    {
+        msDelay(BLINK_PERIOD / 2);
+        if (!GPIO_Input(Button))
+            GPIO_Output(BlueLED, HIGH);
+
+        msDelay(BLINK_PERIOD / 2);
+        GPIO_Output(BlueLED, LOW);
+
+        loopCount++;
+        printf("Loop count = %u\n", loopCount);
+    }
+}
+
+
+##############################################################################################################################################################
+DEsign for concurrency
+##################################################################################################################################################################
+
+
+#include <stdio.h>
+#include "gpio.h"
+#include "systick.h"
+
+static const Pin BlueLED = { GPIOB, 7 }; // Pin PB7 -> User LD2
+static const Pin Button = { GPIOC, 13 }; // Pin PC13 -> User B1
+
+#define BLINK_PERIOD 1000 // 1 second
+
+static Time_t lastToggle;
+
+static unsigned int loopcount = 0;
+
+int main(void)
+{
+    GPIO_Enable(BlueLED);
+    GPIO_Mode(Button, OUTPUT);
+    GPIO_Output(BlueLED, LOW);
+    
+    GPIO_Enable(Button);
+    GPIO_Output(BlueLED, OUTPUT);
+    GPIO_Mode(Button, INPUT);
+
+    StartSysTick();
+
+    printf("Hello, World!\n");
+
+    while (1)
+    {
+        if (TimePassed(lastToggle) >= BLINK_PERIOD / 2) {
+            if (!GPIO_Input(Button)) {
+                GPIO_Toggle(BlueLED);
+                lastToggle = TimeNow();
+            } else {
+                GPIO_Output(BlueLED, LOW);
+                lastToggle = TimeNow();
+            }
+            // Additional task code could be inserted here
+            loopcount++;
+            WaitForSysTick();
+        }
+    }
+}

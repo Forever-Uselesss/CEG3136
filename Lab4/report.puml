@@ -1,0 +1,230 @@
+@startuml STM32_Lab4_Architecture
+!define DRIVER_COLOR #E1F5FE
+!define APP_COLOR #E8F5E8
+!define MGMT_COLOR #FFF3E0
+
+package "Management Layer" MGMT_COLOR {
+    class main {
+        + main()
+    }
+}
+
+package "Application Layer" APP_COLOR {
+    class alarm {
+        + Init_Alarm()
+        + Task_Alarm()
+        + CallbackMotionDetect()
+        + CallbackButtonPress()
+        + CallbackButtonRelease()
+        + AlarmState_t
+    }
+    
+    class calc {
+        + Init_Calc()
+        + Task_Calc()
+        + CalcFunc()
+        + CalcGCD()
+        + CalcFactorial()
+        + fib()
+        + CalcSort()
+        + CalcAverage()
+    }
+    
+    class clock {
+        + Init_Clock()
+        + Task_Clock()
+    }
+    
+    class enviro {
+        + Init_Enviro()
+        + Task_Enviro()
+    }
+    
+    class game {
+        + Init_Game()
+        + Task_Game()
+        + CallbackStart()
+        + nextLevel()
+        + resetSequence()
+        + GameState_t
+        + Sequence_t
+    }
+    
+    class motor {
+        + Init_Motor()
+        + Task_Motor()
+    }
+    
+    class maths {
+        + Increment()
+        + Decrement()
+        + CalcFunc()
+        + CalcGCD()
+        + CalcFactorial()
+        + fib()
+        + CalcSort()
+        + CalcAverage()
+    }
+}
+
+package "Driver Layer" DRIVER_COLOR {
+    class display {
+        + DisplayEnable()
+        + DisplayPrint()
+        + DisplayColor()
+        + GetPage()
+        + UpdateDisplay()
+        + Color_t
+        + Page_t
+    }
+    
+    class touchpad {
+        + TouchEnable()
+        + TouchInput()
+        + TouchEntry()
+        + ScanTouchpad()
+        + ClearTouchpad()
+        + Press_t
+        + Entry_t
+    }
+    
+    class gpio {
+        + GPIO_Enable()
+        + GPIO_Mode()
+        + GPIO_Input()
+        + GPIO_Output()
+        + GPIO_Toggle()
+        + GPIO_Callback()
+        + UpdateIOExpanders()
+        + Pin_t
+        + PinState_t
+        + PinMode_t
+    }
+    
+    class i2c {
+        + I2C_Enable()
+        + I2C_Request()
+        + ServiceI2CRequests()
+        + I2C_Bus_t
+        + I2C_Xfer_t
+        + LeafyI2C
+    }
+    
+    class spi {
+        + SPI_Enable()
+        + SPI_Request()
+        + ServiceSPIRequests()
+        + SPI_Bus_t
+        + SPI_Xfer_t
+        + EnvSPI
+    }
+    
+    class rtc {
+        + RTC_Enable()
+        + RTC_GetTime()
+        + RTC_GetDate()
+        + RTC_SetTime()
+        + RTC_SetDate()
+    }
+    
+    class timer {
+        + TimerEnable()
+        + TimerMode()
+        + TimerPeriod()
+        + TimerOutput()
+        + TimerInput()
+        + TimerCallback()
+        + TimerStart()
+        + TimerIO_t
+        + TimerMode_t
+    }
+    
+    class adc {
+        + ADC_Enable()
+        + ADC_Read()
+        + ADCInput_t
+    }
+    
+    class systick {
+        + StartSysTick()
+        + WaitForSysTick()
+        + msDelay()
+        + TimeNow()
+        + TimePassed()
+        + Time_t
+    }
+    
+    class sysclk {
+        + ConfigureSystemClock()
+    }
+    
+    class syscalls {
+        + _sbrk()
+        + _write()
+        + _read()
+        + system_calls
+    }
+    
+    class sysmem {
+        + _sbrk()
+        + heap_management
+    }
+    
+    class debug {
+        + __io_putchar()
+    }
+}
+
+main --> alarm : Init/Task
+main --> calc : Init/Task
+main --> clock : Init/Task
+main --> enviro : Init/Task
+main --> game : Init/Task
+main --> motor : Init/Task
+main --> systick : Timer
+main --> display : Update
+main --> touchpad : Scan
+main --> i2c : Service
+main --> spi : Service
+main --> gpio : Update
+
+alarm --> display : UI
+alarm --> gpio : Control
+alarm --> systick : Timing
+
+calc --> display : Results
+calc --> touchpad : Input
+calc --> maths : Math_Ops
+
+clock --> display : Time
+clock --> rtc : RTC_Ops
+clock --> touchpad : Settings
+
+enviro --> display : Data
+enviro --> spi : Sensors
+
+game --> display : Game_UI
+game --> gpio : LEDs
+game --> systick : Timing
+
+motor --> display : Status
+motor --> adc : Feedback
+motor --> gpio : Control
+motor --> timer : PWM
+motor --> touchpad : Input
+
+display --> i2c : Comm
+display --> gpio : Backlight
+
+touchpad --> i2c : Touch_Data
+touchpad --> display : Page_Info
+
+i2c --> gpio : Pin_Config
+spi --> gpio : Pin_Config
+timer --> gpio : Output_Pins
+adc --> gpio : Input_Pins
+
+systick --> sysclk : Clock
+rtc --> sysclk : Clock
+
+@enduml
