@@ -1,0 +1,74 @@
+# STM32 Project Repository .gitignore
+
+# Build directories (all projects)
+**/build/
+**/out/
+**/Debug/
+**/Release/
+
+# CMake generated files
+**/CMakeCache.txt
+**/CMakeFiles/
+**/cmake_install.cmake
+**/build.ninja
+**/.ninja_deps
+**/.ninja_log
+**/*.dir/
+**/compile_commands.json
+
+# STM32CubeIDE generated files
+**/.cproject
+**/.project
+**/.settings/
+**/mx.scratch
+**/*.launch
+.metadata/
+**/.metadata/
+
+# Compiled binaries
+**/*.elf
+**/*.bin
+**/*.hex
+**/*.map
+**/*.list
+**/*.axf
+**/*.out
+
+# Object files
+**/*.o
+**/*.obj
+**/*.a
+**/*.lib
+
+# Dependency files
+**/*.d
+
+# Temporary files
+**/*.tmp
+**/*.temp
+**/*~
+
+# IDE specific (but keep essential config files)
+!**/.vscode/settings.json
+!**/.vscode/launch.json
+!**/.vscode/tasks.json
+**/.clangd/
+
+# Keep these important files for building
+!**/.vscode/c_cpp_properties.json
+
+# System files
+**/*.log
+**/*.bak
+**/*.swp
+**/*.swo
+.DS_Store
+Thumbs.db
+*.lnk
+ehthumbs.db
+
+# VS Code workspace files (optional)
+*.code-workspace
+
+# STM32CubeMX backup files
+**/*.ioc.bak
